@@ -65,12 +65,12 @@ exports.addTrip = async (req, res) => {
   //(Admin only)
   exports.deleteTrip = async (req, res) => {
     try {
-      const trip = await Trip.findByIdAndRemove(req.params.id);
+      const trip = await Trip.findById(req.params.id);
   
       if (!trip) {
         return res.status(404).json({ message: 'Trip not found' });
       }
-  
+      await Trip.deleteOne({ _id: req.params.id });
       res.json({ message: 'Trip deleted successfully' });
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -100,6 +100,7 @@ exports.addTrip = async (req, res) => {
 
   exports.getUserPastTrips = async (req, res) => {
     try {
+      console.log(req);
       const pastTrips = await Trip.find({ 
         participants: req.user.userId, 
         endDate: { $lt: new Date() } 

@@ -9,7 +9,7 @@ router.get('/:id', tripController.getTripById);
 router.put('/:id', auth.authenticate, auth.isAdmin, tripController.updateTrip);
 router.delete('/:id', auth.authenticate, auth.isAdmin, tripController.deleteTrip);
 router.post('/join/:id', auth.authenticate, tripController.joinTrip);
-router.get('/pastTrips', auth.authenticate, tripController.getUserPastTrips);
+router.get('/past/trips', auth.authenticate, tripController.getUserPastTrips);
 
 
 module.exports = router;
