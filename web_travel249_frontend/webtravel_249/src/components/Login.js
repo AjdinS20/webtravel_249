@@ -23,11 +23,13 @@ const Login = () => {
         const response = await axios.post('http://localhost:3000/api/users/login', { email, password });
         localStorage.setItem('userToken', response.data.token);
         localStorage.setItem('userRole', response.data.role);
-        console.log(response.data.token);
         history('/home'); // Redirect to home page
-      } catch (error) {
-        setError('Failed to login. Please check your credentials.');
-      }
+      }catch (error) {
+        const errorMessage = error.response && error.response.data.message 
+            ? error.response.data.message 
+            : 'Failed to login. Please check your credentials.';
+        setError(errorMessage);
+    }
     };
 
   const handleGuest = () => {
@@ -53,6 +55,7 @@ const Login = () => {
               <Button variant="outline-primary" onClick={handleGuest} className="w-100 py-2">Continue as Guest</Button>
             </Form>
       </Card.Body>
+      {error && <div className="error-message">{error}</div>}
     </Card>
   </div>
   );

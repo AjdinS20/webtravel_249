@@ -27,7 +27,14 @@ const UserManagement = () => {
 
     const toggleUserActiveStatus = async (userId, isActive) => {
         try {
-            await axios.put(`http://localhost:3000/api/users/deactivate/${userId}`, { isActive: !isActive });
+            const token = await localStorage.getItem('userToken');
+            await axios.put(`http://localhost:3000/api/users/deactivate/${userId}`, 
+            { isActive: !isActive },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}` // Include the token in the Authorization header
+                }
+            });
             fetchUsers(); // Refresh the list after updating
         } catch (error) {
             console.error('Error updating user status', error);

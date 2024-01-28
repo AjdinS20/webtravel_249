@@ -82,7 +82,6 @@ const TripManagement = () => {
     // Placeholder function for edit functionality
     const editTrip = (tripId) => {
         console.log('Edit trip with ID:', tripId);
-        // Implement edit functionality
     };
 
     return (
@@ -173,39 +172,37 @@ const TripManagement = () => {
         </Card>
     </div>
 
-    {trips.map(trip => (
-  <div className="container">
-  <div className="row">
-      {trips.map(trip => (
-          <div key={trip._id} className="col-lg-4 col-md-6 col-12 mb-4">
-              <div className="card">
-                  <img src={trip.destinationImage} alt={trip.title} className="card-img-top" style={{ maxHeight: '200px', objectFit: 'cover' }} />
-                  <div className="card-body">
-                      <h5 className="card-title">{trip.title}</h5>
-                      <p className="card-text">{trip.description}</p>
-                      <p className="card-text"><small className="text-muted">Category: {trip.category}</small></p>
-                      <p className="card-text">Start Date: {new Date(trip.startDate).toLocaleDateString()}</p>
-                      <p className="card-text">End Date: {new Date(trip.endDate).toLocaleDateString()}</p>
-                  </div>
-                  <div className="card-footer">
-                      <button className="btn btn-primary mr-2" onClick={() => handleEdit(trip._id)}>Edit</button>
-                      <button className="btn btn-danger" onClick={() => deleteTrip(trip._id)}>Delete</button>
-                  </div>
-              </div>
-          </div>
-      ))}
-  </div>
+    <div className="container">
+    <div className="row">
+        {trips.map(trip => (
+            <div key={trip._id} className="col-lg-4 col-md-6 col-12 mb-4">
+                <div className="card">
+                    <img src={trip.destinationImage} alt={trip.title} className="card-img-top" style={{ maxHeight: '200px', objectFit: 'cover' }} />
+                    <div className="card-body">
+                        <h5 className="card-title">{trip.title}</h5>
+                        <p className="card-text">{trip.description}</p>
+                        <p className="card-text"><small className="text-muted">Category: {trip.category}</small></p>
+                        <p className="card-text">Start Date: {new Date(trip.startDate).toLocaleDateString()}</p>
+                        <p className="card-text">End Date: {new Date(trip.endDate).toLocaleDateString()}</p>
+                    </div>
+                    <div className="card-footer">
+                        <button className="btn btn-primary mr-2" onClick={() => handleEdit(trip._id)}>Edit</button>
+                        <button className="btn btn-danger" onClick={() => deleteTrip(trip._id)}>Delete</button>
+                    </div>
+                </div>
+            </div>
+        ))}
+    </div>
 </div>
 
-))}
+{editingTrip && (
+    <TripEditModal
+        trip={editingTrip}
+        onSave={saveTrip}
+        onClose={() => setEditingTrip(null)}
+    />
+)}
 
-            {editingTrip && (
-                <TripEditModal
-                    trip={editingTrip}
-                    onSave={saveTrip}
-                    onClose={() => setEditingTrip(null)}
-                />
-            )}
         </div>
     );
 };
